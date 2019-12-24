@@ -10,6 +10,10 @@ plugins {
 
 apply(plugin = "jacoco")
 
+jacoco {
+	toolVersion = "0.8.1"
+}
+
 group = "com.seon"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -46,21 +50,18 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-task("greeting") {
-	doLast { println("Hello, World!") }
-}
 
 tasks.create<JacocoReport>("codeCoverageReport"){
 	executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
 
 	reports {
 		xml.isEnabled = true
-		xml.destination = File("${buildDir}/reports/jacoco/report.xml")
+		xml.destination = file("${buildDir}/reports/jacoco/report.xml")
 		html.isEnabled = false
 		csv.isEnabled = false
 	}
 }
 
 tasks.named("codeCoverageReport") {
-	dependsOn(subprojects.forEach { it.tasks.withType<Test>() })
+	dependsOn(tasks.test)
 }
