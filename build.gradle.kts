@@ -1,24 +1,30 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+val kotlinVersion = "1.3.40"
+val jUnitVersion = "5.4.2"
+val kluentVersion = "1.51"
+val spekVersion = "2.0.5"
+val arrow_version = "0.10.4"
+
 
 plugins {
 	id("org.springframework.boot") version "2.2.2.RELEASE"
 	id("io.spring.dependency-management") version "1.0.8.RELEASE"
 	kotlin("jvm") version "1.3.61"
 	kotlin("plugin.spring") version "1.3.61"
+	jacoco
 }
-
-
-
-group = "com.seon"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
 	mavenCentral()
 	jcenter()
 }
 
-val arrow_version = "0.10.4"
+group = "com.seon"
+version = "0.0.1-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -34,7 +40,30 @@ dependencies {
 	testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:2.2.1.RELEASE")
 }
 
+jacoco {
+	toolVersion = "0.8.4"
+}
+
+tasks.jacocoTestReport {
+	reports {
+		xml.isEnabled = true
+		csv.isEnabled = true
+		html.isEnabled = true
+	}
+}
+
+//tasks.test {
+//	finalizedBy(tasks.jacocoTestReport)
+//	useJUnitPlatform()
+//
+//	testLogging {
+//		exceptionFormat = TestExceptionFormat.FULL
+//		events("passed", "failed", "skipped")
+//	}
+//}
+
 tasks.withType<Test> {
+	finalizedBy(tasks.jacocoTestReport)
 	useJUnitPlatform()
 }
 
