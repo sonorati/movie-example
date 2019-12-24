@@ -49,6 +49,12 @@ tasks.jacocoTestReport {
 		csv.isEnabled = true
 		html.isEnabled = true
 	}
+	extensions.configure(JacocoTaskExtension::class) {
+		isEnabled = true
+		excludes = listOf("**/MoviesApplication.kt", "**/RestConfig.kt")
+		excludeClassLoaders = listOf()
+		isIncludeNoLocationClasses = false
+	}
 }
 
 tasks.getByName<Test>("test") {
