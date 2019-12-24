@@ -14,7 +14,7 @@ class MovieController(val movieClient: MovieClient) {
     fun findMovie(@PathVariable movie: String): ResponseEntity<Any> =
             movieClient.callMovieService(movie)
                 .fold(
-                    { ex:Exception -> ResponseEntity(ex, HttpStatus.valueOf(ex.code)) },
+                    { ex -> ResponseEntity(ex, HttpStatus.valueOf(ex.code)) },
                     { movieResponse -> ResponseEntity(movieResponse, HttpStatus.OK) }
                 )
 }

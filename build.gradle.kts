@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import kotlin.collections.listOf
 
 val jUnitVersion = "5.4.2"
 val kluentVersion = "1.51"
@@ -47,6 +48,15 @@ tasks.jacocoTestReport {
 		xml.isEnabled = true
 		csv.isEnabled = true
 		html.isEnabled = true
+	}
+}
+
+tasks.getByName<Test>("test") {
+	extensions.configure(JacocoTaskExtension::class) {
+		isEnabled = true
+		excludes = listOf("**/MoviesApplication.kt", "**/RestConfig.kt")
+		excludeClassLoaders = listOf()
+		isIncludeNoLocationClasses = false
 	}
 }
 
