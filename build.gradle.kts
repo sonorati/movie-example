@@ -3,10 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.2.2.RELEASE"
 	id("io.spring.dependency-management") version "1.0.8.RELEASE"
-	id("jacoco")
+	jacoco
 	kotlin("jvm") version "1.3.61"
 	kotlin("plugin.spring") version "1.3.61"
 }
+
+apply(plugin = "jacoco")
 
 group = "com.seon"
 version = "0.0.1-SNAPSHOT"
@@ -42,4 +44,23 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "1.8"
 	}
+}
+
+task("greeting") {
+	doLast { println("Hello, World!") }
+}
+
+tasks.create<JacocoReport>("codeCoverageReport"){
+	executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+
+	reports {
+		xml.isEnabled = true
+		xml.destination = File("${buildDir}/reports/jacoco/report.xml")
+		html.isEnabled = false
+		csv.isEnabled = false
+	}
+}
+
+tasks.named("codeCoverageReport") {
+	dependsOn(subprojects.forEach { it.tasks.withType<Test>() })
 }
