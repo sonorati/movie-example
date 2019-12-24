@@ -1,7 +1,5 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val kotlinVersion = "1.3.40"
 val jUnitVersion = "5.4.2"
 val kluentVersion = "1.51"
 val spekVersion = "2.0.5"
@@ -51,16 +49,6 @@ tasks.jacocoTestReport {
 		html.isEnabled = true
 	}
 }
-
-//tasks.test {
-//	finalizedBy(tasks.jacocoTestReport)
-//	useJUnitPlatform()
-//
-//	testLogging {
-//		exceptionFormat = TestExceptionFormat.FULL
-//		events("passed", "failed", "skipped")
-//	}
-//}
 
 tasks.withType<Test> {
 	finalizedBy(tasks.jacocoTestReport)

@@ -3,6 +3,7 @@ package com.seon.demo.movie
 import arrow.core.Either
 import arrow.core.Left
 import arrow.core.Right
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestClientException
@@ -11,9 +12,12 @@ import org.springframework.web.client.RestTemplate
 @Component
 class MovieClient(private val restTemplate: RestTemplate) {
 
+    @Value("\${movie-catalogue.base-url}")
+    lateinit var movieUrl: String
+
     fun callMovieService(movie: String): Either<Exception, Movie> =
         try {
-            val url = "http://localhost:9999/movie-catalogue/$movie"
+            val url = "$movieUrl/movie-catalogue/$movie"
             val response = restTemplate.getForEntity(url, Movie::class.java)
             Right(response.body!!)
         } catch (notFoundEx: HttpClientErrorException) {

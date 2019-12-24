@@ -3,6 +3,7 @@ package com.seon.demo.movie
 import arrow.core.Left
 import arrow.core.Right
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -24,6 +25,10 @@ class MovieClientTest {
     @InjectMocks
     private lateinit var movieClient: MovieClient
 
+    @BeforeEach
+    fun setup() {
+        movieClient.movieUrl = "http://localhost:9999"
+    }
 
     @Test
     fun `should get the movie by name`() {
