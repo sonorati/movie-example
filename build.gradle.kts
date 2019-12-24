@@ -57,11 +57,11 @@ tasks.create<JacocoReport>("codeCoverageReport"){
 	reports {
 		xml.isEnabled = true
 		xml.destination = file("${buildDir}/reports/jacoco/report.xml")
-		html.isEnabled = false
+		html.isEnabled = true
 		csv.isEnabled = false
 	}
 }
 
-tasks.named("codeCoverageReport") {
-	dependsOn(tasks.test)
-}
+//tasks.named("codeCoverageReport") {
+//	dependsOn(tasks.test)
+//}
