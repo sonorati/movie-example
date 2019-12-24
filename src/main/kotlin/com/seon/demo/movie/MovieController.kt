@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 class MovieController(val movieClient: MovieClient) {
 
     @GetMapping("/movies/{movie}")
-    fun greeting(@PathVariable movie: String): ResponseEntity<Any> =
+    fun findMovie(@PathVariable movie: String): ResponseEntity<Any> =
             movieClient.callMovieService(movie)
                 .fold(
                     { ex:Exception -> ResponseEntity(ex, HttpStatus.valueOf(ex.code)) },
