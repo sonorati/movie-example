@@ -63,6 +63,6 @@ tasks.create<JacocoReport>("codeCoverageReport"){
 	}
 }
 
-tasks.named("codeCoverageReport") {
-	dependsOn(tasks.test)
-}
+//tasks.named("codeCoverageReport") {
+//	dependsOn(tasks.test)
+//}
