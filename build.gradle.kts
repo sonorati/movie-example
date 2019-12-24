@@ -53,15 +53,16 @@ tasks.withType<KotlinCompile> {
 
 tasks.create<JacocoReport>("codeCoverageReport"){
 	executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+	classDirectories.from(fileTree(project.rootDir.absolutePath).include("**/build/classes/kotlin/test/**"))
 
 	reports {
 		xml.isEnabled = true
-		xml.destination = file("${buildDir}/reports/jacoco/report.xml")
 		html.isEnabled = true
+		html.destination = file("$buildDir/reports/coverage")
 		csv.isEnabled = false
 	}
 }
 
-//tasks.named("codeCoverageReport") {
-//	dependsOn(tasks.test)
-//}
+tasks.named("codeCoverageReport") {
+	dependsOn(tasks.test)
+}
