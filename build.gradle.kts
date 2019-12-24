@@ -28,6 +28,8 @@ dependencies {
 	implementation("io.arrow-kt:arrow-fx:$arrow_version")
 	implementation("io.arrow-kt:arrow-optics:$arrow_version")
 	implementation("io.arrow-kt:arrow-syntax:$arrow_version")
+	testImplementation("com.github.tomakehurst:wiremock:2.25.1")
+	testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:2.2.1.RELEASE")
 }
 
 tasks.withType<Test> {

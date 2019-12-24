@@ -13,7 +13,7 @@ class MovieClient(private val restTemplate: RestTemplate) {
 
     fun callMovieService(movie: String): Either<Exception, Movie> =
         try {
-            val url = "http://localhost:9999/movies/$movie"
+            val url = "http://localhost:9999/movie-catalogue/$movie"
             val response = restTemplate.getForEntity(url, Movie::class.java)
             Right(response.body!!)
         } catch (notFoundEx: HttpClientErrorException) {

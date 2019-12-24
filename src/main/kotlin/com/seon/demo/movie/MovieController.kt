@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class MovieController(val movieClient: MovieClient) {
 
-    @GetMapping("/greeting/{movie}")
+    @GetMapping("/movies/{movie}")
     fun greeting(@PathVariable movie: String): ResponseEntity<Any> =
             movieClient.callMovieService(movie)
                 .fold(
-                    { ex -> ResponseEntity(ex, HttpStatus.FAILED_DEPENDENCY) },
+                    { ex:Exception -> ResponseEntity(ex, HttpStatus.valueOf(ex.code)) },
                     { movieResponse -> ResponseEntity(movieResponse, HttpStatus.OK) }
                 )
 }

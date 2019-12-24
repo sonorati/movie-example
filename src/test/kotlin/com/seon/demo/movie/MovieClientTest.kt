@@ -29,7 +29,7 @@ class MovieClientTest {
     fun `should get the movie by name`() {
         val title = "StarWars"
         val movie = Movie(title, "J. J. Abrams")
-        val url = "http://localhost:9999/movies/$title"
+        val url = "http://localhost:9999/movie-catalogue/$title"
         `when`(restTemplate.getForEntity(url, Movie::class.java)).thenReturn(ResponseEntity(movie, HttpStatus.OK))
 
         val movieResult = movieClient.callMovieService(title)
@@ -41,7 +41,7 @@ class MovieClientTest {
     @Test
     fun `should get resource not found`() {
         val title = "UnknownMovie"
-        val url = "http://localhost:9999/movies/$title"
+        val url = "http://localhost:9999/movie-catalogue/$title"
         val notFoundEx = HttpClientErrorException(HttpStatus.NOT_FOUND, "not found")
         `when`(restTemplate.getForEntity(url, Movie::class.java)).thenThrow(notFoundEx)
 
@@ -54,7 +54,7 @@ class MovieClientTest {
     @Test
     fun `should get connection refused when 3rd party service is down`() {
         val title = "Alien"
-        val url = "http://localhost:9999/movies/$title"
+        val url = "http://localhost:9999/movie-catalogue/$title"
         val connectionDownEx = RestClientException("Connection refused")
         `when`(restTemplate.getForEntity(url, Movie::class.java)).thenThrow(connectionDownEx)
 
