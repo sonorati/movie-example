@@ -21,8 +21,8 @@ class MovieClient(private val restTemplate: RestTemplate) {
             val response = restTemplate.getForEntity(url, Movie::class.java)
             Right(response.body!!)
         } catch (notFoundEx: HttpClientErrorException) {
-            Left(ResourceNotFound(message = notFoundEx.statusText, code = notFoundEx.rawStatusCode))
+            Left(ResourceNotFound(message = notFoundEx.statusText))
         } catch (e: RestClientException) {
-            Left(ConnectionRefused(message = e.message ?: "Downstream error", code = 424))
+            Left(ConnectionRefused(message = e.message ?: "Downstream error"))
         }
 }

@@ -1,6 +1,8 @@
 server:
   port: 8081
   tomcat.max-threads: 10
+  error:
+    whitelabel.enabled: false
 
 movie-catalogue:
   base-url: http://localhost:9999
