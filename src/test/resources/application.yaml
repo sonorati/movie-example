@@ -8,5 +8,5 @@ movie-catalogue:
   base-url: http://localhost:9999
 
 custom.rest.connection:
-  connect-timeout: 10
-  read-timeout: 10
+  connect-timeout: 2
+  read-timeout: 2
