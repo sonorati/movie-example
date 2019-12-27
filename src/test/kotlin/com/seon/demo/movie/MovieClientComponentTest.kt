@@ -36,11 +36,11 @@ class MovieClientComponentTest {
         stubCallToMovieCatalogue(3000)
 
         val errorMessage = "I/O error on GET request for \"http://localhost:9999/movie-catalogue/StarWars\": Read timed out; nested exception is java.net.SocketTimeoutException: Read timed out"
-        val movie = ConnectionRefused(message = errorMessage)
+        val connectionRefused = ConnectionRefused(message = errorMessage)
         val movieResult = movieClient.callMovieService("StarWars")
 
         assertThat(movieResult.isLeft()).isTrue()
-        AssertionsForClassTypes.assertThat(movieResult).isEqualTo(Left(movie))
+        AssertionsForClassTypes.assertThat(movieResult).isEqualTo(Left(connectionRefused))
     }
 
     private fun stubCallToMovieCatalogue(delay: Int = 0) {
